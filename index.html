@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class=""> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wahid Official - Personal Branding</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 font-poppins text-gray-800 dark:text-gray-200 transition-colors duration-300">
+
+    <header class="bg-white/70 dark:bg-gray-800/70 backdrop-blur-lg shadow-md sticky top-0 z-40">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <img src="logo.jpg" alt="Wahid Official Logo" class="h-10 w-10 rounded-full object-cover">
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Wahid Official</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="text-xl p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+                    <i class="fas fa-sun" id="theme-icon-light"></i>
+                    <i class="fas fa-moon hidden" id="theme-icon-dark"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-8">
+        <section id="filters" class="mb-8 p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="search-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cari Produk</label>
+                    <input type="text" id="search-input" placeholder="Search query..." class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 transition">
+                </div>
+                <div>
+                    <label for="category-filter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filter Kategori</label>
+                    <select id="category-filter" class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 transition">
+                        </select>
+                </div>
+            </div>
+        </section>
+
+        <section id="product-section">
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div id="loading-spinner" class="col-span-full flex justify-center items-center py-16">
+                    <i class="fas fa-spinner fa-spin text-4xl text-blue-500"></i>
+                </div>
+            </div>
+             <p id="no-results" class="hidden text-center text-gray-500 dark:text-gray-400 py-16 text-xl">Yah, produk yang lu cari ga ketemu.</p>
+        </section>
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 mt-12 py-6 shadow-inner">
+        <div class="container mx-auto px-6 text-center text-gray-600 dark:text-gray-400">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://wa.me/6283153228923" target="_blank" class="text-2xl hover:text-green-500 transition-colors"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/TheGodWolf" target="_blank" class="text-2xl hover:text-blue-500 transition-colors"><i class="fab fa-telegram"></i></a>
+            </div>
+            <p>&copy; 2025 Wahid Official. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div id="buy-modal" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center items-center z-50 hidden modal-fade">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-6 sm:p-8 w-full max-w-md mx-4 modal-content">
+            <div class="flex justify-between items-start mb-4 border-b border-gray-200 dark:border-gray-700 pb-4">
+                <div>
+                    <h2 id="modal-product-name" class="text-2xl font-bold text-gray-900 dark:text-white">Nama Produk</h2>
+                    <p id="modal-product-price" class="text-lg text-blue-600 dark:text-blue-400 font-semibold">Harga</p>
+                </div>
+                <button id="close-modal" class="text-2xl text-gray-500 hover:text-gray-800 dark:hover:text-white">&times;</button>
+            </div>
+
+            <form id="purchase-form" novalidate>
+                <div class="mb-5">
+                    <label for="customer-name" class="block text-sm font-medium mb-2">Nama Lengkap Lu</label>
+                    <input type="text" id="customer-name" placeholder="Enter your name" required class="w-full px-4 py-2 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-blue-500 focus:border-blue-500 transition">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-3">Pilih Metode Pembayaran</label>
+                    <div id="payment-buttons-container" class="grid grid-cols-2 gap-3">
+                        <button type="button" class="payment-btn" data-method="QRIS"><i class="fas fa-qrcode"></i> QRIS</button>
+                        <button type="button" class="payment-btn" data-method="Dana"><i class="fas fa-money-bill-wave"></i> Dana</button>
+                        <button type="button" class="payment-btn" data-method="OVO"><i class="fas fa-credit-card"></i> OVO</button>
+                        <button type="button" class="payment-btn" data-method="Gopay"><i class="fas fa-wallet"></i> Gopay</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:scale-105">
+                    Konfirmasi Pesanan
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
